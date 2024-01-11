@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PinController : MonoBehaviour
 {
+    [SerializeField] TMP_Text ScoreText;
     public int Score = 0;
     GameObject[] pins = new GameObject[10];
     Vector3[] pinPos = new Vector3[10];
+
+    bool isFirstFrame = true;
 
     // Start is called before the first frame update
     void Start()
@@ -36,5 +40,31 @@ public class PinController : MonoBehaviour
             }
         }
         Score += count;
+        UpdateScore();
+        if (isFirstFrame)
+        {
+            isFirstFrame = false;
+            return;
+        }
+        
+        ResetPins();
+    }
+
+    public void UpdateScore()
+    {
+        ScoreText.text = Score.ToString();
+    }
+
+    public void ResetPins()
+    {
+        isFirstFrame = true;
+        for(int i = 0; i < 10; i++)
+        {
+            pins[i].SetActive(true);
+            pins[i].transform.localPosition = pinPos[i];
+            pins[i].transform.eulerAngles = Vector3.right * 270;
+            pins[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
+            pins[i].GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        }
     }
 }

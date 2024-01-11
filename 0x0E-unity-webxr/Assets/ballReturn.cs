@@ -11,8 +11,7 @@ public class ballReturn : MonoBehaviour
     {
         if(other.gameObject.tag == "Interactable")
         {
-            other.GetComponent<Renderer>().enabled = false;
-            other.GetComponent<Rigidbody>().isKinematic = true;
+            other.gameObject.SetActive(false);
             StartCoroutine(ReturnBall(other.gameObject));
         }
     }
@@ -24,13 +23,13 @@ public class ballReturn : MonoBehaviour
             {
                 var rb = ball.GetComponent<Rigidbody>();
                 ball.transform.position = ReturnPoint.position;
-                ball.GetComponent<Renderer>().enabled = true;
-                rb.isKinematic = false;
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
+                ball.SetActive(true);
                 OnBallReturned.Invoke();
             }
     }
+
 
 
 }

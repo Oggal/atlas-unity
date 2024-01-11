@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BallControll : MonoBehaviour
 {
-        
+        [SerializeField] float power = 10f;
+        [SerializeField] float assist = 2f;        
         public void OnCollisionStay(Collision col){
                 if(col.gameObject.tag == "pins")
                 {
@@ -15,7 +16,7 @@ public class BallControll : MonoBehaviour
                         var rb = col.gameObject.GetComponent<Rigidbody>();
                         if(rb != null)
                         {
-                                rb.AddForce((Vector3.right * Input.GetAxis("Horizontal")  * 2f * Time.deltaTime) + Vector3.forward );
+                                rb.AddForce((Vector3.right * Input.GetAxis("Horizontal")  * power * Time.deltaTime) + Vector3.forward * assist );
                         }
                 }
                         
